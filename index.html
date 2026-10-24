@@ -1080,8 +1080,9 @@ $('clr').onclick=()=>{stopGps();start=null;target=null;startMode='none';$('qa').
 
 /* ketuk peta: tampilkan koordinat, tidak mengubah titik awal / tujuan */
 map.on('click',e=>{
-  const ll=e.latlng.lat.toFixed(6)+', '+e.latlng.lng.toFixed(6);
-  L.popup({offset:[0,0]}).setLatLng(e.latlng).setContent(`<div class="pop"><h3>Titik di peta</h3><div class="cc">${ll}</div><div class="acts"><button class="full" data-act="copy" data-v="${ll}">Salin koordinat</button></div></div>`).openOn(map);
+  const la=e.latlng.lat.toFixed(6),lo=e.latlng.lng.toFixed(6),ll=la+', '+lo;
+  const da=`data-lat="${la}" data-lon="${lo}" data-name="${ll}"`;
+  L.popup({offset:[0,0]}).setLatLng(e.latlng).setContent(`<div class="pop"><h3>Titik di peta</h3><div class="cc">${ll}</div><div class="acts"><button data-act="from" ${da}>Titik awal</button><button data-act="go" ${da}>Jadikan tujuan</button><button class="g full" data-act="copy" data-v="${ll}">Salin koordinat</button></div></div>`).openOn(map);
 });
 function fallbackCopy(s,ok){const ta=document.createElement('textarea');ta.value=s;ta.style.cssText='position:fixed;opacity:0;top:0;left:0';document.body.appendChild(ta);ta.select();let done=false;try{done=document.execCommand('copy')}catch(e){}ta.remove();if(done)ok()}
 function copyText(s,btn){
