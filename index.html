@@ -861,12 +861,14 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{ou
         <label><input type="checkbox" id="cOdp" checked> ODP</label>
         <label><input type="checkbox" id="cSite" checked> Site</label>
         <label><input type="checkbox" id="cClu" checked> Kelompokkan</label>
-        <label><input type="checkbox" id="cBeta"> Hanya ODP BETA</label>
       </div>
     </div>
     <div class="row">
       <select id="fSto" aria-label="Filter STO"><option value="">Semua STO</option></select>
       <select id="fOcc" aria-label="Filter OCC 2"><option value="">Semua OCC 2</option></select>
+    </div>
+    <div class="row">
+      <select id="fProg" aria-label="Filter program"><option value="">Semua program</option><option value="beta">ODP program BETA</option><option value="non">Bukan program BETA</option></select>
     </div>
     <div class="legend" id="legend"></div>
   </div>
@@ -898,7 +900,7 @@ const occs=['GREEN','YELLOW','ORANGE','RED','BLACK','ANOMALY','GOLIVE'].filter(s
 const pct=v=>(+v.toFixed(2)).toString().replace('.',',')+'%';
 const occTxt=s=>s+(s==='GOLIVE'?' · ODP baru, belum ada data port':SRNG[s]?(SRNG[s][0]===SRNG[s][1]?' · '+pct(SRNG[s][0]):' · '+pct(SRNG[s][0])+' - '+pct(SRNG[s][1])):'');
 occs.forEach(s=>$('fOcc').add(new Option(occTxt(s),s)));
-$('legend').innerHTML=occs.map(s=>`<span><i class="dot" style="background:${SCOL[s]}"></i>${occTxt(s)}</span>`).join('')+'<span><i class="dot" style="background:#fff;border:3px solid #e6007e"></i>Cincin merah muda = ODP program BETA</span>';
+$('legend').innerHTML=occs.map(s=>`<span><i class="dot" style="background:${SCOL[s]}"></i>${occTxt(s)}</span>`).join('');
 
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 function popup(o){
@@ -915,8 +917,7 @@ function odpRows(o){
 }
 function odpMarker(o){
   const [name,lat,lon,av,us,tot,st,sto,oc]=o;
-  const b=isBeta(name);
-  const m=L.circleMarker([lat,lon],{radius:b?8:6,weight:b?3.5:1.5,color:b?'#e6007e':'#fff',fillColor:SCOL[st]||'#888',fillOpacity:.95,bubblingMouseEvents:false});
+  const m=L.circleMarker([lat,lon],{radius:6,weight:1.5,color:'#fff',fillColor:SCOL[st]||'#888',fillOpacity:.95,bubblingMouseEvents:false});
   m.bindPopup(()=>popup({name,lat,lon,rows:odpRows(o)}));
   m._o=o;return m;
 }
@@ -935,8 +936,8 @@ function clusterIcon(c){const n=c.getChildCount();const d=n<100?30:n<1000?38:46;
 function rebuild(){
   if(odpLayer)map.removeLayer(odpLayer);
   const fs=$('fSto').value,fo=$('fOcc').value;
-  const onlyB=$('cBeta').checked;
-  const list=ODP.filter(o=>(!fs||o[7]===fs)&&(!fo||o[6]===fo)&&(!onlyB||isBeta(o[0])));
+  const fp=$('fProg').value;
+  const list=ODP.filter(o=>(!fs||o[7]===fs)&&(!fo||o[6]===fo)&&(!fp||(fp==='beta')===isBeta(o[0])));
   odpLayer=$('cClu').checked?L.markerClusterGroup({chunkedLoading:true,iconCreateFunction:clusterIcon,showCoverageOnHover:false,maxClusterRadius:50,disableClusteringAtZoom:17}):L.layerGroup();
   const ms=list.map(odpMarker);
   odpLayer.addLayers?odpLayer.addLayers(ms):ms.forEach(m=>odpLayer.addLayer(m));
@@ -944,7 +945,7 @@ function rebuild(){
   $('count').textContent=`${list.length.toLocaleString('id-ID')} ODP · ${SITE.length} site`;
 }
 rebuild();siteLayer.addTo(map);
-['fSto','fOcc','cClu','cBeta'].forEach(i=>$(i).onchange=rebuild);
+['fSto','fOcc','cClu','fProg'].forEach(i=>$(i).onchange=rebuild);
 $('cOdp').onchange=()=>$('cOdp').checked?odpLayer.addTo(map):map.removeLayer(odpLayer);
 $('cSite').onchange=()=>$('cSite').checked?siteLayer.addTo(map):map.removeLayer(siteLayer);
 function lab(){map.getContainer().classList.toggle('nolabel',map.getZoom()<12)}
@@ -1112,7 +1113,7 @@ function nearest(ref){
   const arr=[];
   for(const o of ODP){if((fs&&o[7]!==fs)||(fo&&o[6]!==fo))continue;const d=km(ref,[o[1],o[2]]);if(arr.length<5||d<arr[arr.length-1].d){arr.push({o,d});arr.sort((a,b)=>a.d-b.d);if(arr.length>5)arr.pop()}}
   ul.innerHTML='';
-  arr.forEach(({o,d})=>{const li=document.createElement('li');li.innerHTML=`<span><i class="dot" style="background:${SCOL[o[6]]||'#888'}"></i>${o[0]}${isBeta(o[0])?' <b style="color:#e6007e">BETA</b>':''}</span><span class="d">${fmt(d)}</span>`;
+  arr.forEach(({o,d})=>{const li=document.createElement('li');li.innerHTML=`<span><i class="dot" style="background:${SCOL[o[6]]||'#888'}"></i>${o[0]}${isBeta(o[0])?' <b>BETA</b>':''}</span><span class="d">${fmt(d)}</span>`;
     li.onclick=()=>{map.setView([o[1],o[2]],18);L.popup().setLatLng([o[1],o[2]]).setContent(popup({name:o[0],lat:o[1],lon:o[2],rows:odpRows(o)})).openOn(map)};ul.appendChild(li)});
 }
 
