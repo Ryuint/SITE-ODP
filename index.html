@@ -874,7 +874,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{ou
     <div class="fgrid">
       <label class="fc"><small>filter untuk STO</small><select id="fSto" aria-label="Filter STO"><option value="">Semua STO</option></select></label>
       <label class="fc"><small>filter untuk occupancy</small><select id="fOcc" aria-label="Filter occupancy"><option value="">Semua Occupancy</option></select></label>
-      <label class="fc"><small>filter untuk program</small><select id="fProg" aria-label="Filter program"><option value="">Semua program</option><option value="beta">ODP program BETA</option><option value="non">Bukan program BETA</option><option value="ni">ODP Non Intervened</option><option value="prio">ODP Prio Occ</option></select></label>
+      <label class="fc"><small>filter untuk program</small><select id="fProg" aria-label="Filter program"><option value="">Semua program</option><option value="beta">ODP program BETA</option><option value="non">Bukan program BETA</option><option value="ni">ODP Non Intervened</option><option value="prio">ODP Prio Occ</option><option value="bp">ODP BETA + Prio Occ (keduanya)</option></select></label>
       <label class="fc"><small>filter untuk site</small><select id="fSite" aria-label="Filter site"><option value="">Semua site</option><option value="hwa">Site ready Eznet Wireless (127)</option></select></label>
       <label class="fc wide"><small>filter untuk bulan golive</small><select id="fGol" aria-label="Filter bulan golive"><option value="">Semua bulan golive</option></select></label>
     </div>
@@ -942,7 +942,7 @@ function odpRows(o){
   if(p){const pc=p[3]?Math.round(p[4]/p[3]*1000)/10:0;r.push(['Whitelist Prio Occ',`${p[0]} · go live ${fmtD(p[1])} (${p[2]}) · terpakai ${p[4]}/${p[3]} (${pct(pc)}) · ${p[5]}`])}
   return r;
 }
-const passProg=(n,f)=>!f||(f==='beta'?isBeta(n):f==='non'?!isBeta(n):f==='ni'?!!NI[n]:f==='prio'?!!PO[n]:true);
+const passProg=(n,f)=>!f||(f==='beta'?isBeta(n):f==='non'?!isBeta(n):f==='ni'?!!NI[n]:f==='prio'?!!PO[n]:f==='bp'?(isBeta(n)&&!!PO[n]):true);
 const fmtD=s=>{if(!s)return '-';const a=s.split('-');return +a[2]+' '+BLN[+a[1]-1]+' '+a[0]};
 function odpMarker(o){
   const [name,lat,lon,av,us,tot,st,sto,oc]=o;
