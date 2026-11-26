@@ -2,10 +2,10 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <title>Peta ODP dan Site Kupang</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
 <style>
 /* required styles */
 
@@ -674,7 +674,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   --bg:#f3f5f6; --panel:#ffffff; --fg:#14222b; --muted:#5b6b75; --line:#d5dde1;
   --accent:#0b6e8a; --accent-fg:#ffffff; --site:#15324a;
   --s-green:#1f9d62; --s-yellow:#e2a50f; --s-red:#d6453f; --s-black:#2a2f33; --s-anom:#8a4fd1;
-  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif; --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --sans:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif; --mono:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0e161b; --panel:#17222a; --fg:#e6edf0; --muted:#9db0ba; --line:#2b3b45;
@@ -701,6 +701,7 @@ label.lbl{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var
 .fc.wide{grid-column:1/-1}
 .fc small{display:block;font-size:10px;line-height:1.2;letter-spacing:.03em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 input[type=text],select{flex:1;min-width:0;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:8px 9px;font:inherit;font-family:var(--mono);font-size:13px}
+@media (hover:none),(max-width:700px){input[type=text],select{font-size:16px}}
 button.btn,a.btn{background:var(--accent);color:var(--accent-fg);border:0;border-radius:6px;padding:8px 11px;font:inherit;font-weight:500;cursor:pointer;white-space:nowrap}
 button.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
 button.on{outline:2px solid var(--accent);outline-offset:1px}
@@ -777,6 +778,36 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{ou
 .pop button,.pop a{flex:1;font:500 12px var(--sans);border-radius:6px;padding:6px 8px;text-align:center;text-decoration:none;cursor:pointer;border:1px solid #0b6e8a;background:#0b6e8a;color:#fff}
 .pop button.g{background:#fff;color:#0b6e8a}
 .leaflet-container a.leaflet-popup-close-button{display:none!important}
+body{-webkit-font-smoothing:antialiased;letter-spacing:-.003em}
+.panel{border-radius:18px;border-color:transparent;box-shadow:0 10px 32px rgba(10,25,35,.18),0 1px 3px rgba(10,25,35,.08)}
+#ctrl header{border-bottom:0;padding:14px 16px 4px}
+#ctrl h1{font-size:16px;font-weight:600;letter-spacing:-.01em}
+#ctrl .count{font-size:11.5px}
+#body{padding:8px 16px 16px;gap:16px}
+label.lbl{font-size:12px;font-weight:500;letter-spacing:0;text-transform:none}
+.fgrid{gap:10px 8px}
+.fc small{font-size:11px;font-weight:500;letter-spacing:0;padding-left:2px}
+input[type=text],select{border-radius:12px;border:1.5px solid transparent;background:var(--bg);padding:10px 12px;font-size:13px;transition:border-color .15s,box-shadow .15s,background .15s}
+input[type=text]:focus,select:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+button.btn,a.btn{border-radius:12px;padding:10px 14px;font-weight:500;transition:transform .1s,filter .15s,background .15s}
+button.btn:hover{filter:brightness(1.06)}button.btn:active,.bm button:active{transform:scale(.97)}
+button.ghost{border:1.5px solid var(--line);background:transparent}
+#toggle{border-radius:10px;border:1.5px solid var(--line);padding:5px 11px;transition:background .15s}
+#toggle:hover{background:var(--bg)}
+.chk{gap:8px 16px}.chk label{font-size:13px;gap:7px}
+.chk input{accent-color:var(--accent);width:16px;height:16px}
+.near li{border-radius:10px;padding:8px 8px;font-size:12.5px;transition:background .15s}
+#info,.road{border-radius:12px}
+.bm button{border-radius:14px;border-color:transparent;box-shadow:0 4px 14px rgba(10,25,35,.2);transition:background .15s,transform .1s}
+.leaflet-popup-content-wrapper{border-radius:16px;box-shadow:0 8px 28px rgba(10,25,35,.28)}
+.leaflet-popup-content{margin:14px 16px}
+.pop h3{font:600 14px var(--sans);letter-spacing:-.01em;margin-bottom:6px}
+.pop table{font-size:12.5px}.pop td{padding:3px 0}.pop td:first-child{color:#5b6b75;padding-right:12px}
+.pop button,.pop a{border-radius:10px;padding:8px 10px;transition:filter .15s,transform .1s}
+.pop button:active{transform:scale(.97)}
+.pop .xclose{border-radius:10px;padding:4px 12px;font-size:12px}
+.pop h3{padding-right:70px}
+.site-ic span,.cl{font-family:var(--sans)}
 .pop{position:relative}.pop h3{padding-right:62px}
 .pop .xclose{position:absolute;top:-2px;right:0;flex:none;padding:4px 10px;background:#fff;color:#0b6e8a}
 
@@ -867,8 +898,8 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{ou
       <label class="lbl">Tampilkan</label>
       <div class="chk">
         <label><input type="checkbox" id="cOdp" checked> ODP</label>
-        <label><input type="checkbox" id="cSite" checked> Site</label>
-        <label><input type="checkbox" id="cClu" checked> Kelompokkan</label>
+        <label><input type="checkbox" id="cSite"> Site</label>
+        <label><input type="checkbox" id="cClu"> Kelompokkan</label>
       </div>
     </div>
     <div class="fgrid">
@@ -994,7 +1025,7 @@ function rebuild(){
   if($('cOdp').checked)odpLayer.addTo(map);
   odpCount=list.length;$('count').textContent=`${list.length.toLocaleString('id-ID')} ODP · ${siteCount} site`;
 }
-buildSites();rebuild();siteLayer.addTo(map);
+buildSites();rebuild();if($('cSite').checked)siteLayer.addTo(map);
 $('fSite').onchange=()=>{buildSites();$('count').textContent=`${odpCount.toLocaleString('id-ID')} ODP · ${siteCount} site`};
 ['fSto','fOcc','cClu','fProg','fGol'].forEach(i=>$(i).onchange=rebuild);
 $('cOdp').onchange=()=>$('cOdp').checked?odpLayer.addTo(map):map.removeLayer(odpLayer);
